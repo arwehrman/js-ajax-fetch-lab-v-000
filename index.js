@@ -1,53 +1,77 @@
-function getIssues() {
-  const repo = `https://api.github.com/repos/arwehrman/javascript-fetch-lab/issues`
-  fetch(repo, {
-    method: "get"
-  }).then(res => res.json()).then(json => showIssues(json))
+const userName = ''
+const baseApi = 'https://api.github.com/'
+const fork = `${userName}/javascript-fetch-lab`
+
+function Issue(attributes){
+  this.title = attributes.title;
+  this.body = attributes.body;
+  this.url = attributes.url;
 }
 
-function showIssues(json) {
-  let array = json.map(issue => `<li>${issue.title}</li><ul><li>${issue.body}</li></ul>`).join("")
-  $("#issues").append(`<ul>${array}</ul>`)
+function Repo(attributes){
+  this.url = attributes.url;
 }
+
+Issue.prototype.template = function(){
+   var template = `<li>Title: <a href="${this.url}">${this.title} </a><span> | Body: ${this.body}</span></li>`
+   return template;
+};
+
+Repo.prototype.template = function(){
+  var template = `<h3>Forked Successfully!</h3><a href="${this.url}"> ${this.url}</a>`
+  return template;
+};
+
 
 function createIssue() {
-  const repo = 'arwehrman/javascript-fetch-lab'
-  const token = getToken()
   const issueTitle = document.getElementById('title').value
   const issueBody = document.getElementById('body').value
-
-  const postData = {
-    title: `${issueTitle}`,
-    body: `${issueBody}`
-  }
-
-  fetch(`https://api.github.com/repos/${repo}/issues`, {
-    method: "post",
-    body: JSON.stringify(postData),
+  const postData = { title: issueTitle, body: issueBody }
+  fetch(`${baseApi}repos/${fork}/issues`, {
+    method: 'post',
     headers: {
-      Authorization: `token ${token}`
-    }
-  }).then(res => getIssues())
+      'Authorization': `token ${getToken()}`
+    },
+    body: JSON.stringify(postData)
+  }).then(resp => getIssues())
 }
 
-function showResults(json) {
+
+function getIssues(data) {
+  fetch(`${baseApi}repos/${fork}/issues`).
+    then(resp => {
+      resp.json().then( data => {
+        for (let i = 0; i < data.length; i++){
+          displayIssue(new Issue(data[i]));
+        }
+      } )
+    })
 }
+
+function displayIssue(issue) {
+  $('#issues').append(issue.template())
+}
+
 
 function forkRepo() {
   const repo = 'learn-co-curriculum/javascript-fetch-lab'
-  const token = getToken()
-  fetch(`https://api.github.com/repos/${repo}/forks`, {
-    method: "post",
+
+  fetch(`${baseApi}repos/${repo}/forks`, {
+    method: 'post',
     headers: {
-      Authorization: `token ${token}`
+      'Authorization': `token ${getToken()}`
     }
-  }).then(res => res.json()).then(json => showForkedRepo(json))
+  }).then(resp => {
+    let repo = new Repo(resp);
+    showForkedRepo(repo);
+  })
 }
 
-function showForkedRepo(res){
-  $("#results").append(`<p><a href="${res.html_url}">${res.html_url}</a></p>`)
+function showForkedRepo(repo) {
+  $('#results').append(repo.template())
 }
+
 
 function getToken() {
-  return 'e128dee41b0bb4573f8b717debd615de47c4d1e5'
+  return ''
 }
