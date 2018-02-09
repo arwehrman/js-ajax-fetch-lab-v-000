@@ -1,5 +1,5 @@
 function getIssues() {
-  const repo = 'jlmack13/javascript-fetch-lab'
+  const repo = 'arwehrman/javascript-fetch-lab'
   const url = 'https://api.github.com/repos/' + repo + '/issues'
   fetch(url).then(res => res.json()).then(json => showIssues(json));
 }
@@ -11,7 +11,7 @@ function showIssues(json) {
 }
 
 function createIssue() {
-  const repo = 'jlmack13/javascript-fetch-lab'
+  const repo = 'arwehrman/javascript-fetch-lab'
   const url = 'https://api.github.com/repos/' + repo + '/issues'
   const issueData = {
     title: document.getElementById("title").value,
