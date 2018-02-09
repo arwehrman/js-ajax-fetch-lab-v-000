@@ -49,5 +49,5 @@ function showForkedRepo(res){
 }
 
 function getToken() {
-  return ''
+  return 'e128dee41b0bb4573f8b717debd615de47c4d1e5'
 }
