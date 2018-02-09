@@ -1,13 +1,11 @@
 function getIssues() {
   const repo = `https://api.github.com/repos/dschlauderaff/javascript-fetch-lab/issues`
-
   fetch(repo, {
     method: "get"
   }).then(res => res.json()).then(json => showIssues(json))
 }
 
 function showIssues(json) {
-
   let array = json.map(issue => `<li>${issue.title}</li><ul><li>${issue.body}</li></ul>`).join("")
   $("#issues").append(`<ul>${array}</ul>`)
 }
