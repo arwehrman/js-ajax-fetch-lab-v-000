@@ -2,6 +2,7 @@ function getIssues() {
 }
 
 function showIssues(json) {
+  GET /repos/:owner/:repo/issues
 }
 
 function createIssue() {
