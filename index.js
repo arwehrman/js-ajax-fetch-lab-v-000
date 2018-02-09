@@ -1,4 +1,4 @@
-const userName = 'arwehrman'
+const userName = ''
 const baseApi = "https://api.github.com/"
 const fork = `${userName}/javascript-fetch-lab`
 
