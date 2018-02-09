@@ -11,7 +11,7 @@ function showIssues(json) {
 }
 
 function createIssue() {
-  const repo = 'dschlauderaff/javascript-fetch-lab'
+  const repo = 'awehrman/javascript-fetch-lab'
   const token = getToken()
   const issueTitle = document.getElementById('title').value
   const issueBody = document.getElementById('body').value
