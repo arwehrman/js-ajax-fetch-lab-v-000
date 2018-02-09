@@ -1,5 +1,5 @@
 function getIssues() {
-  const repo = `https://api.github.com/repos/dschlauderaff/javascript-fetch-lab/issues`
+  const repo = `https://api.github.com/repos/arwehrman/javascript-fetch-lab/issues`
   fetch(repo, {
     method: "get"
   }).then(res => res.json()).then(json => showIssues(json))
@@ -11,7 +11,7 @@ function showIssues(json) {
 }
 
 function createIssue() {
-  const repo = 'awehrman/javascript-fetch-lab'
+  const repo = 'arwehrman/javascript-fetch-lab'
   const token = getToken()
   const issueTitle = document.getElementById('title').value
   const issueBody = document.getElementById('body').value
