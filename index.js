@@ -1,12 +1,31 @@
 function getIssues() {
+  const repo = 'jlmack13/javascript-fetch-lab'
+  const url = 'https://api.github.com/repos/' + repo + '/issues'
+  fetch(url).then(res => res.json()).then(json => showIssues(json));
 }
 
 function showIssues(json) {
-  GET /repos/:owner/:repo/issues
+  $("#issues").html(json.map( issue => {
+    `<h3>${issue.title}</h3><p>${issue.body}</p>`
+  }).join(""))
 }
 
 function createIssue() {
-  POST /repos/:owner/:repo/issues
+  const repo = 'jlmack13/javascript-fetch-lab'
+  const url = 'https://api.github.com/repos/' + repo + '/issues'
+  const issueData = {
+    title: document.getElementById("title").value,
+    body: document.getElementById("body").value
+  };
+  fetch(url, {
+    method: 'post',
+    title: JSON.stringify(issueData),
+    body: JSON.stringify(issueData),
+    headers: {
+      Authorization: `token ${getToken()}`
+    }
+  }).then(res => res.json());
+  getIssues();
 }
 
 function showResults(json) {
@@ -32,5 +51,6 @@ function forkRepo() {
 function getToken() {
   //change to your token to run in browser, but set
   //back to '' before committing so all tests pass
+
   return ''
 }
