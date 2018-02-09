@@ -10,6 +10,8 @@ function createIssue() {
 }
 
 function showResults(json) {
+  var results = document.getElementById('results');
+  results.append(string)
 }
 
 function forkRepo() {
