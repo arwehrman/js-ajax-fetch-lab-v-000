@@ -5,6 +5,7 @@ function showIssues(json) {
 }
 
 function createIssue() {
+  POST /repos/:owner/:repo/issues
 }
 
 function showResults(json) {
