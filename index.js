@@ -2,26 +2,24 @@ const userName = ''
 const baseApi = 'https://api.github.com/'
 const fork = `${userName}/javascript-fetch-lab`
 
-function Issue(attributes){
-  this.title = attributes.title;
-  this.body = attributes.body;
-  this.url = attributes.url;
+//Fetch all issues through the Github API and display/append to the DOM
+
+function getIssues(data) {
+  fetch(`${baseApi}repos/${fork}/issues`).
+    then(resp => {
+      resp.json().then( data => {
+        for (let i = 0; i < data.length; i++){
+          displayIssue(new Issue(data[i]));
+        }
+      } )
+    })
 }
 
-function Repo(attributes){
-  this.url = attributes.url;
+function showIssues(json) {
+  $('#issues').append(json.template())
 }
 
-Issue.prototype.template = function(){
-   var template = `<li>Title: <a href="${this.url}">${this.title} </a><span> | Body: ${this.body}</span></li>`
-   return template;
-};
-
-Repo.prototype.template = function(){
-  var template = `<h3>Forked Successfully!</h3><a href="${this.url}"> ${this.url}</a>`
-  return template;
-};
-
+//Create an issue through the Github API
 
 function createIssue() {
   const issueTitle = document.getElementById('title').value
@@ -36,26 +34,15 @@ function createIssue() {
   }).then(resp => getIssues())
 }
 
-
-function getIssues(data) {
-  fetch(`${baseApi}repos/${fork}/issues`).
-    then(resp => {
-      resp.json().then( data => {
-        for (let i = 0; i < data.length; i++){
-          displayIssue(new Issue(data[i]));
-        }
-      } )
-    })
+function showResults(json) {
+  $('#results').append(json.template())
 }
 
-function displayIssue(issue) {
-  $('#issues').append(issue.template())
-}
-
+//Fetch and show repo info
 
 function forkRepo() {
   const repo = 'learn-co-curriculum/javascript-fetch-lab'
-
+  //use fetch to fork it!
   fetch(`${baseApi}repos/${repo}/forks`, {
     method: 'post',
     headers: {
@@ -67,11 +54,8 @@ function forkRepo() {
   })
 }
 
-function showForkedRepo(repo) {
-  $('#results').append(repo.template())
-}
-
-
 function getToken() {
-  return 'e128dee41b0bb4573f8b717debd615de47c4d1e5'
+	//change to your token to run in browser, but set
+  	//back to '' before committing so all tests pass
+  return ''
 }
